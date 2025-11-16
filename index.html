@@ -1,0 +1,771 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>HOT – Verified Dating</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <!-- BASIC STYLES -->
+  <style>
+    :root {
+      --hot-red: #ff1a1a;
+      --hot-orange: #ff6a00;
+      --hot-bg: #050505;
+      --hot-card: #121212;
+      --hot-text: #ffffff;
+      --hot-muted: #9b9b9b;
+      --hot-border: #262626;
+      --radius-xl: 22px;
+      --shadow-soft: 0 14px 30px rgba(0,0,0,0.55);
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "SF Pro", "Roboto", sans-serif;
+      background: radial-gradient(circle at top, #171717 0, #000000 55%, #000000 100%);
+      color: var(--hot-text);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+    }
+
+    .app {
+      width: 100%;
+      max-width: 420px;
+      min-height: 100vh;
+      background: #000000;
+      position: relative;
+      overflow: hidden;
+    }
+
+    header {
+      padding: 18px 20px 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-bottom: 1px solid var(--hot-border);
+    }
+
+    .logo {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 2px;
+    }
+
+    .logo-text {
+      font-weight: 800;
+      letter-spacing: 0.18em;
+      font-size: 20px;
+    }
+
+    .logo-flame {
+      width: 18px;
+      height: 18px;
+      border-radius: 999px;
+      background: conic-gradient(from 180deg, var(--hot-red), var(--hot-orange), var(--hot-red));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
+      font-size: 12px;
+      margin-bottom: 2px;
+    }
+
+    .logo-tagline {
+      font-size: 11px;
+      color: var(--hot-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+    }
+
+    main {
+      padding: 20px 16px 82px;
+    }
+
+    /* NAV TABS */
+    .tabs {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 14px;
+    }
+    .tab {
+      flex: 1;
+      padding: 9px 10px;
+      border-radius: 999px;
+      background: #050505;
+      border: 1px solid var(--hot-border);
+      color: var(--hot-muted);
+      font-size: 12px;
+      text-align: center;
+      cursor: pointer;
+      transition: 0.22s all ease;
+    }
+    .tab.active {
+      background: linear-gradient(135deg, var(--hot-red), var(--hot-orange));
+      border-color: transparent;
+      color: #ffffff;
+      font-weight: 600;
+      box-shadow: 0 0 18px rgba(255, 60, 0, 0.55);
+    }
+
+    /* CARD */
+    .card {
+      background: var(--hot-card);
+      border-radius: var(--radius-xl);
+      padding: 12px 12px 16px;
+      box-shadow: var(--shadow-soft);
+      overflow: hidden;
+      display: none;
+      flex-direction: column;
+      gap: 10px;
+      position: relative;
+    }
+
+    .card.active { display: flex; }
+
+    .card-img {
+      position: relative;
+      border-radius: 18px;
+      overflow: hidden;
+      height: 340px;
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+    }
+
+    .card-gradient {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0.2) 55%, transparent 100%);
+    }
+
+    .card-badge {
+      position: absolute;
+      top: 14px;
+      left: 14px;
+      padding: 5px 10px;
+      border-radius: 999px;
+      font-size: 11px;
+      background: rgba(0,0,0,0.76);
+      color: #fff;
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      text-transform: uppercase;
+      letter-spacing: .14em;
+    }
+
+    .card-badge span.badge-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 999px;
+      background: linear-gradient(135deg, var(--hot-red), var(--hot-orange));
+    }
+
+    .card-footer {
+      position: absolute;
+      left: 16px;
+      right: 16px;
+      bottom: 18px;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .name-age {
+      font-size: 22px;
+      font-weight: 700;
+      display: flex;
+      align-items: baseline;
+      gap: 6px;
+    }
+
+    .location {
+      font-size: 13px;
+      color: var(--hot-muted);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .location-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 999px;
+      background: var(--hot-orange);
+    }
+
+    .bio {
+      margin-top: 6px;
+      font-size: 13px;
+      color: #f2f2f2;
+    }
+
+    .hot-score {
+      margin-top: 8px;
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: .16em;
+      color: var(--hot-muted);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .hot-score-bar {
+      flex: 1;
+      height: 4px;
+      border-radius: 999px;
+      background: #262626;
+      overflow: hidden;
+    }
+    .hot-score-fill {
+      width: 78%;
+      height: 100%;
+      background: linear-gradient(90deg, var(--hot-orange), var(--hot-red));
+      box-shadow: 0 0 12px rgba(255,50,0,0.7);
+    }
+
+    /* BUTTON ROW */
+    .actions {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 18px;
+      margin-top: 16px;
+    }
+
+    .circle-btn {
+      width: 62px;
+      height: 62px;
+      border-radius: 50%;
+      border: 1px solid #2b2b2b;
+      background: #050505;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 24px;
+      cursor: pointer;
+      transition: transform .12s ease, box-shadow .12s ease, background .18s ease;
+    }
+    .circle-btn span {
+      transform: translateY(-1px);
+    }
+    .circle-btn:hover {
+      transform: translateY(-2px) scale(1.03);
+      box-shadow: 0 10px 28px rgba(0,0,0,0.6);
+    }
+    .circle-btn.dislike { color: #f55; }
+    .circle-btn.like {
+      background: radial-gradient(circle at 20% 0, #ff9f5b 0, #ff1a1a 40%, #850000 100%);
+      border: none;
+      color: #fff;
+      box-shadow: 0 0 18px rgba(255,72,0,0.9);
+    }
+
+    .primary-btn {
+      margin-top: 14px;
+      width: 100%;
+      padding: 13px 14px;
+      border-radius: 999px;
+      border: none;
+      background: linear-gradient(135deg, var(--hot-red), var(--hot-orange));
+      color: #ffffff;
+      font-size: 14px;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      cursor: pointer;
+      box-shadow: 0 12px 24px rgba(255,68,0,0.55);
+      transition: transform .1s ease, box-shadow .1s ease;
+    }
+
+    .primary-btn:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 14px 30px rgba(0,0,0,0.8);
+    }
+
+    /* MATCH MODAL */
+    .modal-backdrop {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.85);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 10;
+    }
+    .modal-backdrop.active { display: flex; }
+
+    .modal {
+      width: 90%;
+      max-width: 360px;
+      background: #070707;
+      border-radius: 24px;
+      padding: 24px 22px 20px;
+      box-shadow: var(--shadow-soft);
+      text-align: center;
+      border: 1px solid #2a2a2a;
+    }
+    .modal-title {
+      font-size: 22px;
+      font-weight: 800;
+      letter-spacing: .18em;
+      text-transform: uppercase;
+      margin-bottom: 6px;
+    }
+    .modal-title span {
+      background: linear-gradient(90deg, var(--hot-red), var(--hot-orange));
+      -webkit-background-clip: text;
+      color: transparent;
+    }
+    .modal-sub {
+      font-size: 13px;
+      color: var(--hot-muted);
+      margin-bottom: 18px;
+    }
+    .modal-btn-row {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin-top: 4px;
+    }
+    .btn-outline {
+      width: 100%;
+      padding: 12px 14px;
+      border-radius: 999px;
+      border: 1px solid #3a3a3a;
+      background: transparent;
+      color: #f5f5f5;
+      font-size: 13px;
+      font-weight: 500;
+      cursor: pointer;
+    }
+
+    /* PRICING SCREEN */
+    .screen {
+      display: none;
+    }
+    .screen.active { display: block; }
+
+    .pricing {
+      background: var(--hot-card);
+      border-radius: var(--radius-xl);
+      padding: 18px 16px 18px;
+      box-shadow: var(--shadow-soft);
+    }
+
+    .pricing h2 {
+      font-size: 20px;
+      margin-bottom: 4px;
+    }
+    .pricing p {
+      font-size: 13px;
+      color: var(--hot-muted);
+      margin-bottom: 16px;
+    }
+    .plan {
+      border-radius: 18px;
+      border: 1px solid #272727;
+      padding: 12px 12px;
+      margin-bottom: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      background: #050505;
+    }
+    .plan.best {
+      border-color: var(--hot-orange);
+      box-shadow: 0 0 18px rgba(255,78,0,0.5);
+    }
+    .plan-left h3 {
+      font-size: 14px;
+      margin-bottom: 4px;
+    }
+    .plan-left span.tag {
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: .18em;
+      color: var(--hot-orange);
+    }
+    .plan-desc {
+      margin-top: 5px;
+      font-size: 11px;
+      color: var(--hot-muted);
+    }
+    .plan-price {
+      text-align: right;
+    }
+    .plan-price strong {
+      font-size: 18px;
+      display: block;
+    }
+    .plan-price small {
+      font-size: 11px;
+      color: var(--hot-muted);
+    }
+
+    /* BOTTOM NAV */
+    .bottom-nav {
+      position: fixed;
+      bottom: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 100%;
+      max-width: 420px;
+      border-top: 1px solid #1b1b1b;
+      background: rgba(0,0,0,0.98);
+      display: flex;
+      padding: 10px 20px 12px;
+      justify-content: space-between;
+      backdrop-filter: blur(18px);
+    }
+
+    .nav-item {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      font-size: 10px;
+      color: var(--hot-muted);
+      cursor: pointer;
+      gap: 3px;
+    }
+    .nav-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 999px;
+      background: #343434;
+    }
+    .nav-item span.icon {
+      font-size: 17px;
+    }
+    .nav-item.active .nav-dot {
+      background: linear-gradient(135deg, var(--hot-red), var(--hot-orange));
+      box-shadow: 0 0 12px rgba(255,72,0,0.7);
+    }
+    .nav-item.active {
+      color: #ffffff;
+      font-weight: 500;
+    }
+
+    @media (min-height: 800px) {
+      .card-img { height: 380px; }
+    }
+
+  </style>
+</head>
+<body>
+<div class="app">
+  <header>
+    <div class="logo">
+      <div class="logo-flame">🔥</div>
+      <div class="logo-text">HOT</div>
+      <div class="logo-tagline">Verified Dating</div>
+    </div>
+  </header>
+
+  <main>
+    <!-- Tabs -->
+    <div class="tabs">
+      <div class="tab active" data-screen="browseScreen">Browse</div>
+      <div class="tab" data-screen="pricingScreen">Upgrade</div>
+      <div class="tab" data-screen="profileScreen">My Profile</div>
+    </div>
+
+    <!-- BROWSE / MATCH SCREEN -->
+    <section id="browseScreen" class="screen active">
+      <div id="cardContainer">
+        <!-- cards inserted by JS -->
+      </div>
+    </section>
+
+    <!-- PRICING SCREEN -->
+    <section id="pricingScreen" class="screen">
+      <div class="pricing">
+        <h2>How HOT are you?</h2>
+        <p>Verify to unlock full features and get pushed to the front of the line.</p>
+
+        <div class="plan">
+          <div class="plan-left">
+            <h3>Free</h3>
+            <div class="plan-desc">
+              • Limited likes<br>
+              • Basic browsing<br>
+              • No priority placement
+            </div>
+          </div>
+          <div class="plan-price">
+            <strong>$0</strong>
+            <small>Stay lukewarm.</small>
+          </div>
+        </div>
+
+        <div class="plan best">
+          <div class="plan-left">
+            <h3>Verified</h3>
+            <span class="tag">Most Popular</span>
+            <div class="plan-desc">
+              • HOT badge on your profile<br>
+              • Identity check & manual approval<br>
+              • Priority in local matching
+            </div>
+          </div>
+          <div class="plan-price">
+            <strong>$9.99</strong>
+            <small>One-time verification</small>
+          </div>
+        </div>
+
+        <div class="plan">
+          <div class="plan-left">
+            <h3>Elite</h3>
+            <div class="plan-desc">
+              • Unlimited likes & intros<br>
+              • See who likes you<br>
+              • Invites to HOT events
+            </div>
+          </div>
+          <div class="plan-price">
+            <strong>$29.99</strong>
+            <small>Per month</small>
+          </div>
+        </div>
+
+        <button class="primary-btn" onclick="alert('Hook this button to Stripe or your payment link.')">
+          Upgrade Now
+        </button>
+      </div>
+    </section>
+
+    <!-- SIMPLE PROFILE SCREEN -->
+    <section id="profileScreen" class="screen">
+      <div class="pricing">
+        <h2>Your HOT Profile</h2>
+        <p>For now this is a demo profile. In production you'll pull real user data from your backend.</p>
+
+        <div class="plan">
+          <div class="plan-left">
+            <h3>Blake, 34</h3>
+            <div class="plan-desc">
+              Kansas City · Builder · Founder<br>
+              “I turn crazy ideas into real money.”
+            </div>
+          </div>
+          <div class="plan-price">
+            <strong>Elite</strong>
+            <small>Demo Status</small>
+          </div>
+        </div>
+
+        <button class="primary-btn" onclick="alert('In the real app, this would open edit-profile settings.')">
+          Edit Profile
+        </button>
+      </div>
+    </section>
+  </main>
+
+  <!-- MATCH MODAL -->
+  <div class="modal-backdrop" id="matchModal">
+    <div class="modal">
+      <div class="modal-title">IT'S <span>HOT</span>!</div>
+      <div class="modal-sub">
+        You just matched. Start talking before it cools off.
+      </div>
+      <div class="modal-btn-row">
+        <button class="primary-btn" id="startChatBtn">Send Message</button>
+        <button class="btn-outline" id="keepBrowsingBtn">Keep Browsing</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- BOTTOM NAV (MIRRORS TABS) -->
+  <nav class="bottom-nav">
+    <div class="nav-item active" data-screen="browseScreen">
+      <span class="nav-dot"></span>
+      <span class="icon">🔥</span>
+      Browse
+    </div>
+    <div class="nav-item" data-screen="pricingScreen">
+      <span class="nav-dot"></span>
+      <span class="icon">💳</span>
+      Upgrade
+    </div>
+    <div class="nav-item" data-screen="profileScreen">
+      <span class="nav-dot"></span>
+      <span class="icon">👤</span>
+      Profile
+    </div>
+  </nav>
+</div>
+
+<!-- APP LOGIC -->
+<script>
+  // Dummy profiles for the front-end demo
+  const profiles = [
+    {
+      name: "Emily",
+      age: 27,
+      city: "Kansas City",
+      bio: "Midwest transplant, dog mom, and foodie. Looking for someone to explore new restaurants with.",
+      photo: "https://images.pexels.com/photos/415829/pexels-photo-415829.jpeg?auto=compress&cs=tinysrgb&w=800",
+      score: 92
+    },
+    {
+      name: "Sofia",
+      age: 29,
+      city: "Overland Park",
+      bio: "Runs on espresso and live music. I swipe right for ambition and good energy only.",
+      photo: "https://images.pexels.com/photos/415829/pexels-photo-415829.jpeg?auto=compress&cs=tinysrgb&w=800&h=900",
+      score: 88
+    },
+    {
+      name: "Ava",
+      age: 26,
+      city: "Kansas City",
+      bio: "Pilates, tequila, and soft launch dates. If you can make me laugh, you’re already winning.",
+      photo: "https://images.pexels.com/photos/733872/pexels-photo-733872.jpeg?auto=compress&cs=tinysrgb&w=800",
+      score: 90
+    }
+  ];
+
+  let currentIndex = 0;
+
+  const cardContainer = document.getElementById("cardContainer");
+  const matchModal = document.getElementById("matchModal");
+  const startChatBtn = document.getElementById("startChatBtn");
+  const keepBrowsingBtn = document.getElementById("keepBrowsingBtn");
+
+  function renderProfiles() {
+    cardContainer.innerHTML = "";
+    profiles.forEach((p, index) => {
+      const card = document.createElement("div");
+      card.className = "card" + (index === 0 ? " active" : "");
+      card.dataset.index = index;
+
+      const cardImg = document.createElement("div");
+      cardImg.className = "card-img";
+      cardImg.style.backgroundImage = `url('${p.photo}')`;
+
+      const grad = document.createElement("div");
+      grad.className = "card-gradient";
+
+      const badge = document.createElement("div");
+      badge.className = "card-badge";
+      badge.innerHTML = `<span class="badge-dot"></span> VERIFIED`;
+
+      const footer = document.createElement("div");
+      footer.className = "card-footer";
+
+      const nameAge = document.createElement("div");
+      nameAge.className = "name-age";
+      nameAge.textContent = `${p.name}, ${p.age}`;
+
+      const location = document.createElement("div");
+      location.className = "location";
+      location.innerHTML = `<span class="location-dot"></span>${p.city}`;
+
+      const bio = document.createElement("div");
+      bio.className = "bio";
+      bio.textContent = p.bio;
+
+      const hotScore = document.createElement("div");
+      hotScore.className = "hot-score";
+      hotScore.innerHTML = `HOT SCORE
+        <div class="hot-score-bar"><div class="hot-score-fill" style="width:${p.score}%"></div></div>`;
+
+      footer.appendChild(nameAge);
+      footer.appendChild(location);
+      footer.appendChild(bio);
+      footer.appendChild(hotScore);
+
+      cardImg.appendChild(grad);
+      cardImg.appendChild(badge);
+      cardImg.appendChild(footer);
+
+      const actions = document.createElement("div");
+      actions.className = "actions";
+      actions.innerHTML = `
+        <button class="circle-btn dislike" data-action="dislike"><span>✕</span></button>
+        <button class="circle-btn like" data-action="like"><span>❤</span></button>
+      `;
+
+      const interestBtn = document.createElement("button");
+      interestBtn.className = "primary-btn";
+      interestBtn.textContent = "Show Interest";
+      interestBtn.dataset.action = "like";
+
+      card.appendChild(cardImg);
+      card.appendChild(actions);
+      card.appendChild(interestBtn);
+
+      cardContainer.appendChild(card);
+    });
+  }
+
+  function getCurrentCard() {
+    return cardContainer.querySelector(`.card[data-index="${currentIndex}"]`);
+  }
+
+  function nextProfile() {
+    const currentCard = getCurrentCard();
+    if (!currentCard) return;
+    currentCard.classList.remove("active");
+    currentIndex = (currentIndex + 1) % profiles.length;
+    const nextCard = getCurrentCard();
+    if (nextCard) nextCard.classList.add("active");
+  }
+
+  function openMatchModal() {
+    matchModal.classList.add("active");
+  }
+
+  function closeMatchModal() {
+    matchModal.classList.remove("active");
+  }
+
+  // Event delegation for like/dislike buttons
+  cardContainer.addEventListener("click", (e) => {
+    const action = e.target.dataset.action || e.target.parentElement?.dataset.action;
+    if (!action) return;
+
+    if (action === "like") {
+      openMatchModal(); // in a real app you’d only show this on mutual match
+      setTimeout(() => nextProfile(), 300);
+    } else if (action === "dislike") {
+      nextProfile();
+    }
+  });
+
+  keepBrowsingBtn.addEventListener("click", closeMatchModal);
+  startChatBtn.addEventListener("click", () => {
+    alert("In the real app this opens chat. For now it's just a demo.");
+    closeMatchModal();
+  });
+
+  // Tab + bottom nav switching
+  const screens = document.querySelectorAll(".screen");
+  const tabs = document.querySelectorAll(".tab");
+  const navItems = document.querySelectorAll(".nav-item");
+
+  function showScreen(id) {
+    screens.forEach(s => s.classList.toggle("active", s.id === id));
+    tabs.forEach(t => t.classList.toggle("active", t.dataset.screen === id));
+    navItems.forEach(n => n.classList.toggle("active", n.dataset.screen === id));
+  }
+
+  tabs.forEach(tab => {
+    tab.addEventListener("click", () => showScreen(tab.dataset.screen));
+  });
+  navItems.forEach(nav => {
+    nav.addEventListener("click", () => showScreen(nav.dataset.screen));
+  });
+
+  // Initial render
+  renderProfiles();
+</script>
+</body>
+</html>
