@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>HOT – Verified Dating</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <!-- BASIC STYLES -->
+  <style>
+    :root {
+      --hot-red: #ff1a1a;
+      --hot-orange: #ff6a00;
+      --hot-bg: #050505;
+      --hot-card: #121212;
+      --hot-text: #ffffff;
+      --hot-muted: #9b9b9b;
+      --hot-border: #262626;
+      --radius-xl: 22px;
+      --shadow-soft: 0 14px 30px rgba(0,0,0,0.55);
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "SF Pro", "Roboto", sans-serif;
+      background: radial-gradient(circle at top, #171717 0, #000000 55%, #000000 100%);
+      color: var(--hot-text);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+    }
+
+    .app {
+      width: 100%;
+      max-width: 420px;
+      min-height: 100vh;
+      background: #000000;
+      position: relative;
+      overflow: hidden;
+    }
+
+    header {
+      padding: 18px 20px 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-bottom: 1px solid var(--hot-border);
+    }
+
+    .logo {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 2px;
+    }
+
+    .logo-text {
+      font-weight: 800;
+      letter-spacing: 0.18em;
+      font-size: 20px;
+    }
+
+    .logo-flame {
+      width: 18px;
+      height: 18px;
+      border-radius: 999px;
+      background: conic-gradient(from 180deg, var(--hot-red), var(--hot-orange), var(--hot-red));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
+      font-size: 12px;
+      margin-bottom: 2px;
+    }
+
+    .logo-tagline {
+      font-size: 11px;
+      color: var(--hot-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+    }
+
+    main {
+      padding: 20px 16px 82px;
+    }
+
+    /* NAV TABS */
+    .tabs {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 14px;
+    }
+    .tab {
+      flex: 1;
+      padding: 9px 10px;
+      border-radius: 999px;
+      background: #050505;
+      border: 1px solid var(--hot-border);
+      color: var(--hot-muted);
+      font-size: 12px;
+      text-align: center;
+      cursor: pointer;
+      transition: 0.22s all ease;
+    }
+    .tab.active {
+      background: linear-gradient(135deg, var(--hot-red), var(--hot-orange));
+      border-color: transparent;
+      color: #ffffff;
+      font-weight: 600;
+      box-shadow: 0 0 18px rgba(255, 60, 0, 0.55);
+    }
+
+    /* CARD */
+    .card {
+      background: var(--hot-card);
+      border-radius: var(--radius-xl);
+      padding: 12px 12px 16px;
+      box-shadow: var(--shadow-soft);
+      overflow: hidden;
+      display: none;
+      flex-direction: column;
+      gap: 10px;
+      position: relative;
+    }
+
+    .card.active { display: flex; }
+
+    .card-img {
+      position: relative;
+      border-radius: 18px;
+      overflow: hidden;
+      height: 340px;
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+    }
+
+    .card-gradient {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0.2) 55%, transparent 100%);
+    }
+
+    .card-badge {
+      position: absolute;
+      top: 14px;
+      left: 14px;
+      padding: 5px 10px;
+      border-radius: 999px;
+      font-size: 11px;
+      background: rgba(0,0,0,0.76);
+      color: #fff;
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      text-transform: uppercase;
+      letter-spacing: .14em;
+    }
+
+    .card-badge span.badge-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 999px;
+      background: linear-gradient(135deg, var(--hot-red), var(--hot-orange));
+    }
+
+    .card-footer {
+      position: absolute;
+      left: 16px;
+      right: 16px;
+      bottom: 18px;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .name-age {
+      font-size: 22px;
+      font-weight: 700;
+      display: flex;
+      align-items: baseline;
+      gap: 6px;
+    }
+
+    .location {
+      font-size: 13px;
+      color: var(--hot-muted);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .location-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 999px;
+      background: var(--hot-orange);
+    }
+
+    .bio {
+      margin-top: 6px;
+      font-size: 13px;
+      color: #f2f2f2;
+    }
+
+    .hot-score {
+      margin-top: 8px;
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: .16em;
+      color: var(--hot-muted);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .hot-score-bar {
+      flex: 1;
+      height: 4px;
+      border-radius: 999px;
+      background: #262626;
+      overflow: hidden;
+    }
+    .hot-score-fill {
+      width: 78%;
+      height:
