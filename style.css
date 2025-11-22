@@ -1,0 +1,297 @@
+:root {
+  --hot-red: #ff1a1a;
+  --hot-orange: #ff6a00;
+  --hot-bg: #050505;
+  --hot-card: #141414;
+  --hot-text: #ffffff;
+  --hot-muted: #a0a0a0;
+  --radius-xl: 22px;
+  --shadow-soft: 0 14px 30px rgba(0, 0, 0, 0.55);
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "SF Pro",
+    "Roboto", sans-serif;
+}
+
+body {
+  background: radial-gradient(circle at top, #171717 0, #000000 55%);
+  color: var(--hot-text);
+  min-height: 100vh;
+}
+
+#app {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 12px 16px 40px;
+}
+
+/* NAVBAR */
+.nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 4px 20px;
+}
+
+.logo {
+  font-size: 1.4rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+}
+
+.logo span {
+  margin-left: 4px;
+}
+
+.nav-links {
+  display: flex;
+  gap: 8px;
+}
+
+.nav-btn {
+  background: transparent;
+  border: 1px solid #333;
+  border-radius: 999px;
+  padding: 6px 12px;
+  color: var(--hot-text);
+  font-size: 0.8rem;
+}
+
+/* SCREENS */
+.screen {
+  display: none;
+}
+
+.screen.active {
+  display: block;
+}
+
+h1,
+h2 {
+  margin-bottom: 12px;
+}
+
+/* HERO */
+.hero {
+  margin-top: 30px;
+  text-align: center;
+}
+
+.hero p {
+  color: var(--hot-muted);
+  margin-bottom: 20px;
+}
+
+.hero-actions {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+}
+
+/* BUTTONS */
+button {
+  cursor: pointer;
+}
+
+.primary {
+  background: linear-gradient(135deg, var(--hot-red), var(--hot-orange));
+  border: none;
+  color: white;
+  padding: 10px 18px;
+  border-radius: 999px;
+  font-weight: 600;
+  box-shadow: var(--shadow-soft);
+}
+
+.secondary {
+  background: #222;
+  border: 1px solid #444;
+  color: #fff;
+  padding: 8px 14px;
+  border-radius: 18px;
+}
+
+.ghost {
+  background: transparent;
+  border: 1px solid #444;
+  color: #fff;
+  padding: 8px 14px;
+  border-radius: 18px;
+}
+
+/* FORMS */
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-top: 10px;
+}
+
+label {
+  display: flex;
+  flex-direction: column;
+  font-size: 0.9rem;
+  gap: 4px;
+}
+
+input,
+textarea {
+  background: #111;
+  border: 1px solid #333;
+  border-radius: 10px;
+  padding: 8px 10px;
+  color: white;
+}
+
+/* CARDS */
+.card {
+  background: var(--hot-card);
+  border-radius: var(--radius-xl);
+  padding: 18px;
+  margin-top: 12px;
+  box-shadow: var(--shadow-soft);
+}
+
+.avatar-placeholder {
+  width: 72px;
+  height: 72px;
+  border-radius: 999px;
+  background: #222;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2rem;
+  margin-bottom: 10px;
+}
+
+.profile-actions {
+  display: flex;
+  gap: 10px;
+  margin-top: 12px;
+}
+
+.feed-actions {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 12px;
+}
+
+/* CHAT */
+.chat-layout {
+  display: grid;
+  grid-template-columns: 120px 1fr;
+  gap: 10px;
+}
+
+.chat-list {
+  background: #111;
+  border-radius: 16px;
+  padding: 8px;
+}
+
+.chat-list-item {
+  padding: 8px 10px;
+  border-radius: 10px;
+  font-size: 0.9rem;
+  cursor: pointer;
+}
+
+.chat-list-item.active {
+  background: #222;
+}
+
+.chat-window {
+  background: #111;
+  border-radius: 16px;
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+}
+
+.chat-messages {
+  flex: 1;
+  overflow-y: auto;
+  padding-bottom: 6px;
+}
+
+.msg {
+  max-width: 80%;
+  padding: 8px 10px;
+  border-radius: 14px;
+  font-size: 0.9rem;
+  margin-bottom: 6px;
+}
+
+.msg-them {
+  background: #222;
+  align-self: flex-start;
+}
+
+.msg-me {
+  background: linear-gradient(135deg, var(--hot-red), var(--hot-orange));
+  align-self: flex-end;
+}
+
+.chat-input-row {
+  display: flex;
+  gap: 6px;
+  margin-top: 8px;
+}
+
+.chat-input-row input {
+  flex: 1;
+}
+
+/* VIDEO */
+.video-layout {
+  display: flex;
+  gap: 10px;
+  margin-top: 12px;
+  flex-wrap: wrap;
+}
+
+video {
+  width: 48%;
+  max-height: 220px;
+  background: #000;
+  border-radius: 16px;
+}
+
+.video-room-controls {
+  margin-top: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  max-width: 360px;
+}
+
+.video-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.hint {
+  font-size: 0.8rem;
+  color: var(--hot-muted);
+  margin-top: 6px;
+}
+
+/* MOBILE */
+@media (max-width: 700px) {
+  .chat-layout {
+    grid-template-columns: 1fr;
+  }
+
+  video {
+    width: 100%;
+  }
+
+  .nav-links {
+    gap: 4px;
+  }
+}
