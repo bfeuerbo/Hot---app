@@ -15,7 +15,32 @@ const firebaseConfig = {
 // Initialize Firebase
 firebase.initializeApp(firebaseConfig);
 const db = firebase.database();
+// Firebase Auth
+const auth = firebase.auth();
+let currentUser = null;
 
+// Watch auth state changes
+auth.onAuthStateChanged((user) => {
+  currentUser = user;
+  const statusEl = document.getElementById("auth-status");
+  const logoutBtn = document.getElementById("logout-button");
+
+  if (user) {
+    if (statusEl) {
+      statusEl.textContent = "Logged in as " + (user.email || "user");
+    }
+    if (logoutBtn) {
+      logoutBtn.style.display = "inline-block";
+    }
+  } else {
+    if (statusEl) {
+      statusEl.textContent = "Not logged in.";
+    }
+    if (logoutBtn) {
+      logoutBtn.style.display = "none";
+    }
+  }
+});
 /***********************
  *  SIMPLE SPA NAVIGATION
  ***********************/
