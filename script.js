@@ -292,3 +292,57 @@ function goHotPremium() {
   const url =https://buy.stripe.com/test_eVq6oIg6Z9jO3J8bRd2cg00 ";
   window.location.href = url;
 }
+/***********************
+ *  AUTH FUNCTIONS
+ ***********************/
+async function signUp() {
+  const email = document.getElementById("auth-email").value.trim();
+  const password = document.getElementById("auth-password").value;
+  const statusEl = document.getElementById("auth-status");
+
+  if (!email || !password) {
+    statusEl.textContent = "Enter an email and password.";
+    return;
+  }
+
+  try {
+    await auth.createUserWithEmailAndPassword(email, password);
+    statusEl.textContent = "Account created. You are now logged in.";
+    showScreen("onboarding");
+  } catch (err) {
+    console.error(err);
+    statusEl.textContent = err.message;
+  }
+}
+
+async function logIn() {
+  const email = document.getElementById("auth-email").value.trim();
+  const password = document.getElementById("auth-password").value;
+  const statusEl = document.getElementById("auth-status");
+
+  if (!email || !password) {
+    statusEl.textContent = "Enter an email and password.";
+    return;
+  }
+
+  try {
+    await auth.signInWithEmailAndPassword(email, password);
+    statusEl.textContent = "Logged in.";
+    showScreen("onboarding");
+  } catch (err) {
+    console.error(err);
+    statusEl.textContent = err.message;
+  }
+}
+
+async function logOut() {
+  const statusEl = document.getElementById("auth-status");
+  try {
+    await auth.signOut();
+    statusEl.textContent = "Logged out.";
+    showScreen("auth");
+  } catch (err) {
+    console.error(err);
+    statusEl.textContent = err.message;
+  }
+}
