@@ -45,10 +45,19 @@ auth.onAuthStateChanged((user) => {
  *  SIMPLE SPA NAVIGATION
  ***********************/
 function showScreen(name) {
+  // If user is not logged in, only allow landing + auth screens
+  if (!currentUser && name !== "landing" && name !== "auth") {
+    name = "auth";
+  }
+
   document.querySelectorAll(".screen").forEach((s) => {
     s.classList.remove("active");
   });
-  document.getElementById("screen-" + name).classList.add("active");
+
+  const target = document.getElementById("screen-" + name);
+  if (target) {
+    target.classList.add("active");
+  }
 }
 
 document.querySelectorAll(".nav-btn").forEach((btn) => {
