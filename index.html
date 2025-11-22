@@ -566,6 +566,42 @@
         </button>
       </div>
     </section>
+<nav class>
+  <!-- Auth / Account -->
+      <section id="screen-auth" class="screen">
+        <h2>Log in or create account</h2>
+        <form onsubmit="return false;">
+          <label>
+            Email
+            <input type="email" id="auth-email" required />
+          </label>
+          <label>
+            Password
+            <input type="password" id="auth-password" required />
+          </label>
+
+          <div class="auth-buttons">
+            <button class="primary" type="button" onclick="signUp()">
+              Create account
+            </button>
+            <button class="secondary" type="button" onclick="logIn()">
+              Log in
+            </button>
+          </div>
+
+          <p id="auth-status" class="hint">Not logged in.</p>
+        </form>
+
+        <button
+          class="ghost"
+          type="button"
+          id="logout-button"
+          onclick="logOut()"
+          style="display:none;margin-top:10px;"
+        >
+          Log out
+        </button>
+      </section>
   </main>
 
   <!-- MATCH MODAL -->
@@ -581,7 +617,6 @@
       </div>
     </div>
   </div>
-
   <!-- BOTTOM NAV (MIRRORS TABS) -->
   <nav class="bottom-nav">
     <div class="nav-item active" data-screen="browseScreen">
@@ -601,7 +636,13 @@
     </div>
   </nav>
 </div>
-
+<nav class="nav-links">
+  <button class="nav-btn" data-screen="landing">Home</button>
+  <button class="nav-btn" data-screen="feed">Feed</button>
+  <button class="nav-btn" data-screen="profile">Profile</button>
+  <button class="nav-btn" data-screen="chat">Chat</button>
+  <button class="nav-btn" data-screen="auth">Account</button>
+</nav>
 <!-- APP LOGIC -->
 <script>
   // Dummy profiles for the front-end demo
