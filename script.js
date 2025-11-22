@@ -253,3 +253,8 @@ async function hangUp() {
 
   document.getElementById("video-status").textContent = "Call ended.";
 }
+function goHotPremium() {
+  // Replace this with your own Stripe payment link
+  const url =https://buy.stripe.com/test_eVq6oIg6Z9jO3J8bRd2cg00 ";
+  window.location.href = url;
+}
